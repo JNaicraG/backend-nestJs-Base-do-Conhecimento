@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Catch, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, TypeORMError } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListUserDto } from './dto/list-user.dto';
 
@@ -11,35 +11,107 @@ export class UserService {
 
   constructor(
     @InjectRepository(User)
-    private userRepository:Repository<User>
-  ){}
+    private userRepository: Repository<User>
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const user = new User({...createUserDto});
+    const user = new User({ ...createUserDto });
     const dadosSalvos = await this.userRepository.save(user);
-    const listaDados = new ListUserDto({...dadosSalvos});
 
     const resultado = {
-      data:listaDados,
-      message:'Usuário salvo com sucesso!'
+      data: dadosSalvos,
+      message: 'Usuário salvo com sucesso!'
     }
 
     return resultado;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const dadosSalvos = await this.userRepository.find({
+      order: {
+        id: 'ASC'
+      }
+    });
+    const users = dadosSalvos.map(user => new ListUserDto(user.id, user.email));
+
+    return users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  //Utilizar ExceptionFilters posteriormente
+  async findOne(id: number) {
+    let resultado, error;
+
+    await this.userRepository.findOne({
+      where: {
+        id
+      }
+    })
+      .then(userSalvo => {
+        const user = new ListUserDto(userSalvo.id, userSalvo.email)
+        resultado = {
+          data: user,
+          message: "Usuário encontrado!"
+        }
+      })
+      .catch(err => error = err);
+
+    this.Error(error);
+
+    return resultado;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    let resultado, error;
+    const user = new User({ ...updateUserDto });
+    await this.userRepository.update(id, user)
+      .then(user => {
+        resultado = {
+          message: 'Usuário atualizado com sucesso'
+        };
+      })
+      .catch(err => error = err);
+
+    this.Error(error);
+
+    return resultado;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const userDeletado = await this.userRepository.delete(id);
+
+    if (!userDeletado.affected) {
+      this.Error('Usuário não encontrado');
+    }
+
+    const resultado = {
+      message: 'Usuário removido com sucesso'
+    };
+    return resultado;
+  }
+
+  async findByEmail(email: string) {
+    let resultado, error;
+
+    await this.userRepository.findOneBy({
+      email
+    })
+      .then(userSalvo => {
+        const user = new ListUserDto(userSalvo.id, userSalvo.email)
+        resultado = {
+          data: user,
+          message: "Usuário encontrado!"
+        }
+      })
+      .catch(err => error = err);
+
+    this.Error(error);
+
+    return resultado;
+  }
+
+  Error(error: string) {
+    if (error) {
+      throw new NotFoundException(error);
+    }
   }
 }
