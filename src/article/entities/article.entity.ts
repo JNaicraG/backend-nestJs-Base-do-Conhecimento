@@ -1,9 +1,10 @@
 import { Category } from "src/category/entities/category.entity";
+import { AbstractEntity } from "src/shared/abstract/abstract.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 Entity({ name: 'articles' })
-export class Article {
+export class Article extends AbstractEntity<Article>{
     @PrimaryGeneratedColumn()
     id: number;
 
