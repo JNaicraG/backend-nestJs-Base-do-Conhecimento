@@ -1,4 +1,4 @@
-import { AbstractEntity } from "src/config/abstract/abstract.entity";
+import { AbstractEntity } from "src/shared/abstract/abstract.entity";
 import { Column, Entity } from "typeorm";
 
 @Entity({ name: 'users' })      //Id extendido através de Abstract

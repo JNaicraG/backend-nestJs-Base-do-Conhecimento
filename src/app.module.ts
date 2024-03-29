@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { IsUniqueConstraint } from './shared/validation/is-unique-constraint';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [UserModule,
@@ -15,7 +16,8 @@ import { IsUniqueConstraint } from './shared/validation/is-unique-constraint';
     TypeOrmModule.forRootAsync({
       useClass:PostgresConfigService,
       inject:[PostgresConfigService]
-    })  
+    }),
+    CategoryModule  
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],
