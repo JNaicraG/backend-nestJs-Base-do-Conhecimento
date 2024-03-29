@@ -25,6 +25,7 @@
 ## Descrição
 
 Projeto realizado no intuito de botar em prova minhas habilidades com NestJs, transformando o projeto inicialmente criado seguindo o curso da Cod3rs (Curso de Web Moderno), backend base do conhecimento (github: https://github.com/JNaicraG/backend---base-do-conhecimento), feito em expressJS. Embora as várias similaridades, visto que o nestJS é "montado por cima" do expressJS, o framework conta com suas singularidades que estão sendo exploradas neste projeto.
+O projeto conta com a utilização do TypeORM para lidar com ORM e facilitar a comunicação com o banco em si (no projeto original fora utilizado o knex) e há o planejamento de utilizar o Swagger, junto de openApi.
 
 ## Deploy
   Assim que possível.
