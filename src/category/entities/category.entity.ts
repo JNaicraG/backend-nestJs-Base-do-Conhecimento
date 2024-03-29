@@ -1,5 +1,6 @@
+import { Article } from "src/article/entities/article.entity";
 import { AbstractEntity } from "src/shared/abstract/abstract.entity";
-import { Column, Entity, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from "typeorm";
 
 @Entity({name:'categories'})
 @Tree('closure-table')
@@ -23,4 +24,11 @@ export class Category extends AbstractEntity<Category>{
         cascade:true
     })
     children:Category[];
+
+    @OneToMany(
+        ()=> Article,
+        article => article.category,
+        {orphanedRowAction:'delete'}
+    )
+    articles:Article[];
 }
