@@ -75,7 +75,7 @@ export class CategoryService {
     await this.categoryRepository.update(id, category)
     .then(user => {
       resultado = {
-        message: 'Usuário atualizado com sucesso'
+        message: 'Categoria atualizada com sucesso'
       };
     })
 
@@ -87,11 +87,11 @@ export class CategoryService {
     const categoryDeletada = await this.categoryRepository.delete(id);
 
     if (!categoryDeletada.affected) {
-      //this.Error('Usuário não encontrado');
+      //this.Error('Categoria não encontrado');
     }
 
     const resultado = {
-      message: 'Usuário removido com sucesso'
+      message: 'Categoria removida com sucesso'
     };
     return resultado;
   }
