@@ -1,36 +1,26 @@
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn, TreeChildren, TreeLevelColumn, TreeParent } from "typeorm";
+import { AbstractEntity } from "src/shared/abstract/abstract.entity";
+import { Column, Entity, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from "typeorm";
 
-export class Category {
-    @PrimaryGeneratedColumn()
-    id: number;
+@Entity({name:'categories'})
+@Tree('closure-table')
+export class Category extends AbstractEntity<Category>{
 
-    @Column()
-    name: string;
+    @Column({
+        name:'name',
+        type:'varchar',
+        length:100,
+        nullable:false
+    })
+    name:string;
 
-
-    //Closure Table
-    //https://orkhan.gitbook.io/typeorm/docs/entities#tree-entities
-    //https://pt.slideshare.net/slideshow/models-for-hierarchical-data/4179181
-    @TreeChildren()
-    children:Category[];
-
-    @TreeParent()
+    @TreeParent({
+        onDelete:'CASCADE'
+    })
     parent:Category;
 
-    @TreeLevelColumn()
-    level:number;
 
-    //Adjacency list
-    //@ManyToOne(
-    //    () => Category,
-    //    (category) => category.children,
-    //    { cascade: true }
-    //)
-    //parent: Category;
-
-    //@OneToMany(
-    //    () => Category,
-    //    (category) => category.parent
-    //)
-    //children: Category[];
+    @TreeChildren({
+        cascade:true
+    })
+    children:Category[];
 }
