@@ -62,8 +62,9 @@ export class ArticleService {
     return article;
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    const article = new Article({ ...updateArticleDto});
+    await this.articleRepository.update(id,article);
   }
 
   remove(id: number) {
