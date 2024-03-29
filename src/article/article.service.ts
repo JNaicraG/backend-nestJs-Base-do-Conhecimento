@@ -4,19 +4,20 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from './entities/article.entity';
 import { Repository } from 'typeorm';
+import { ListArticleDto } from './dto/list-article.dto';
 
 @Injectable()
 export class ArticleService {
 
   constructor(
     @InjectRepository(Article)
-    private articleRepository:Repository<Article>
-  ){}
+    private articleRepository: Repository<Article>
+  ) { }
 
-  create(createArticleDto: CreateArticleDto) {
-    const article = new Article({ ...createArticleDto});
+  async create(createArticleDto: CreateArticleDto) {
+    const article = new Article({ ...createArticleDto });
 
-    const dadosSalvos = this.articleRepository.save(article);
+    const dadosSalvos = await this.articleRepository.save(article);
 
     const resultado = {
       data: dadosSalvos,
@@ -26,8 +27,23 @@ export class ArticleService {
     return resultado;
   }
 
-  findAll() {
-    return `This action returns all article`;
+  async findAll() {
+    const dadosSalvos = await this.articleRepository.find({
+      order: {
+        id: 'ASC'
+      }
+    });
+    const articles = dadosSalvos.map(article => new ListArticleDto(
+      article.id,
+      article.userId,
+      article.categoryId,
+      article.name,
+      article.content,
+      article.description,
+      article.url)
+    );
+
+    return articles;
   }
 
   findOne(id: number) {
