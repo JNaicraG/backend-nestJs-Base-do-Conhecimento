@@ -9,6 +9,36 @@ export class Article extends AbstractEntity<Article>{
     id: number;
 
     @Column({
+        name: 'name',
+        type: 'varchar',
+        length:100,
+        nullable: false
+    })
+    name:string;
+
+    @Column({
+        name: 'description',
+        type: 'text',
+        nullable: false
+    })
+    description:string;
+
+    @Column({
+        name: 'imageUrl',
+        type: 'varchar',
+        length:100,
+        nullable: false
+    })
+    url:string;
+
+    @Column({
+        name: 'content',
+        type: 'binary',
+        nullable: false
+    })
+    content:string;
+
+    @Column({
         name: 'user_id',
         type: 'integer',
         nullable: false
