@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from './entities/article.entity';
 import { Repository } from 'typeorm';
 import { ListArticleDto } from './dto/list-article.dto';
+import { Category } from 'src/category/entities/category.entity';
 
 @Injectable()
 export class ArticleService {
@@ -46,8 +47,19 @@ export class ArticleService {
     return articles;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  async findOne(id: number) {
+    const dadoSalvo = await this.articleRepository.findOneBy({id});
+    const article = new ListArticleDto(
+      dadoSalvo.id,
+      dadoSalvo.userId,
+      dadoSalvo.categoryId,
+      dadoSalvo.name,
+      dadoSalvo.content,
+      dadoSalvo.description,
+      dadoSalvo.url
+    );
+
+    return article;
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
