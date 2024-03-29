@@ -7,6 +7,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 import { IsUniqueConstraint } from './shared/validation/is-unique-constraint';
 import { CategoryModule } from './category/category.module';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [UserModule,
@@ -17,7 +18,8 @@ import { CategoryModule } from './category/category.module';
       useClass:PostgresConfigService,
       inject:[PostgresConfigService]
     }),
-    CategoryModule  
+    CategoryModule,
+    ArticleModule  
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],
