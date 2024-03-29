@@ -67,7 +67,17 @@ export class ArticleService {
     await this.articleRepository.update(id,article);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
+  async remove(id: number) {
+      const articleDeletado = await this.articleRepository.delete(id);
+
+      if (!articleDeletado.affected) {
+        //this.Error('Usuário não encontrado');
+      }
+  
+      const resultado = {
+        message: 'Artigo removido com sucesso'
+      };
+
+      return resultado;
   }
 }
