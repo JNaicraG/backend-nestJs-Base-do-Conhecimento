@@ -6,7 +6,15 @@ import { Column, Entity, OneToMany } from "typeorm";
 export class User extends AbstractEntity<User>{
 
     @Column({
-        name: 'nome',
+        name: 'name',
+        type:'varchar',
+        length: 100,
+        nullable: false
+    })
+    name: string;
+
+    @Column({
+        name: 'email',
         type:'varchar',
         length: 100,
         nullable: false
@@ -20,6 +28,13 @@ export class User extends AbstractEntity<User>{
         nullable: false
     })
     password: string;
+
+    @Column({
+        name: 'admin',
+        default:false,
+        nullable: false
+    })
+    admin: boolean;
 
     @OneToMany(
         ()=> Article,
