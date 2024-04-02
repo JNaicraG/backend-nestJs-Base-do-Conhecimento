@@ -5,6 +5,8 @@ import { User } from './entities/user.entity';
 import { Repository, TypeORMError } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListUserDto } from './dto/list-user.dto';
+import * as bcrypt from 'bcrypt';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UserService {
@@ -14,7 +16,16 @@ export class UserService {
     private userRepository: Repository<User>
   ) { }
 
+  rounds: number = 10;
+
+  async encryptPassword(password: string) {
+    const salt = await bcrypt.genSalt(this.rounds);
+    const hash = await bcrypt.hash(password, salt);
+    return hash
+  }
+
   async create(createUserDto: CreateUserDto) {
+    createUserDto.password = await this.encryptPassword(createUserDto.password);
     const user = new User({ ...createUserDto });
     const dadosSalvos = await this.userRepository.save(user);
 
@@ -62,6 +73,9 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     let resultado, error;
+    if (updateUserDto.password) {
+      updateUserDto.password = await this.encryptPassword(updateUserDto.password);
+    }
     const user = new User({ ...updateUserDto });
     await this.userRepository.update(id, user)
       .then(user => {
@@ -89,11 +103,15 @@ export class UserService {
     return resultado;
   }
 
-  async findByEmail(email: string) {
+  //async findByEmail(email: string) {
+  async findByEmail(getUserDto: GetUserDto) {
     let resultado, error;
-
-    await this.userRepository.findOneBy({
-      email
+    const email = getUserDto.email;
+    console.log('email',email)
+    await this.userRepository.findOne({
+      where:{
+        email
+      }
     })
       .then(userSalvo => {
         const user = new ListUserDto(userSalvo.id, userSalvo.email)
