@@ -1,9 +1,9 @@
 import { Category } from "src/category/entities/category.entity";
 import { AbstractEntity } from "src/shared/abstract/abstract.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-Entity({ name: 'articles' })
+@Entity({ name: 'articles' })
 export class Article extends AbstractEntity<Article>{
     @PrimaryGeneratedColumn()
     id: number;
@@ -33,17 +33,11 @@ export class Article extends AbstractEntity<Article>{
 
     @Column({
         name: 'content',
-        type: 'binary',
+        type: 'bytea',
         nullable: false
     })
     content:string;
 
-    @Column({
-        name: 'user_id',
-        type: 'integer',
-        nullable: false
-    })
-    userId: number;
 
     @ManyToOne(
         () => User,
@@ -53,14 +47,15 @@ export class Article extends AbstractEntity<Article>{
             onDelete: 'CASCADE'
         }
     )
+    @JoinColumn({
+        name:'user_id',
+        referencedColumnName:'id'
+    })
     user: User;
 
-    @Column({
-        name: 'category_id',
-        type: 'integer',
-        nullable: false
-    })
-    categoryId: number;
+    @Column({ name: 'user_id' })
+    userId: number;
+
 
     @ManyToOne(
         () => Category,
@@ -70,5 +65,13 @@ export class Article extends AbstractEntity<Article>{
             onDelete: 'CASCADE'
         }
     )
+    @JoinColumn({
+        name:'category_id',
+        referencedColumnName:'id'
+    })
     category: Category;
+
+    
+    @Column({ name: 'category_id' })
+    categoryId: number;
 }
