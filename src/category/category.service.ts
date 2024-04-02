@@ -55,7 +55,7 @@ export class CategoryService {
 
   async findTrees() {
     const trees = await this.categoryRepository.findTrees({ depth: 3 });
-    
+
     const categoriesWithPath = await this.withPath(trees);
 
     return categoriesWithPath;
@@ -63,23 +63,23 @@ export class CategoryService {
 
 
   findOne(id: number) {
-    return this.categoryRepository.findOneBy({id});
+    return this.categoryRepository.findOneBy({ id });
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    
-    const category = new Category({ ...updateCategoryDto});
+
+    const category = new Category({ ...updateCategoryDto });
     console.log(category)
 
     let resultado, error;
     await this.categoryRepository.update(id, category)
-    .then(user => {
-      resultado = {
-        message: 'Categoria atualizada com sucesso'
-      };
-    })
+      .then(user => {
+        resultado = {
+          message: 'Categoria atualizada com sucesso'
+        };
+      })
 
-    return {resultado, error};
+    return { resultado, error };
 
   }
 
@@ -103,7 +103,11 @@ export class CategoryService {
     const categoriesWithPath = await Promise.all(categories.map(async (category) => {
       const ancestors = await this.categoryRepository.findAncestors(category);
       let path = category.name;
-      ancestors.map(ancestor => path = `${ancestor.name} > ${path}`);
+      ancestors.map(ancestor => {
+        if (category.id != ancestor.id){
+          path = `${ancestor.name} > ${path}`
+        }
+      });
       return { ...category, path };
     }))
 
