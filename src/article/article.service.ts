@@ -22,7 +22,7 @@ export class ArticleService {
 
     const resultado = {
       data: dadosSalvos,
-      message: 'Usuário salvo com sucesso!'
+      message: 'Artigo salvo com sucesso!'
     };
 
     return resultado;
