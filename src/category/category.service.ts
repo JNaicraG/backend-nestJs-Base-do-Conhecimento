@@ -25,7 +25,6 @@ export class CategoryService {
           id: createCategoryDto.parentId
         }
       });
-      console.log(parent);
     }
 
     const category = new Category({
@@ -69,7 +68,6 @@ export class CategoryService {
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
 
     const category = new Category({ ...updateCategoryDto });
-    console.log(category)
 
     let resultado, error;
     await this.categoryRepository.update(id, category)
@@ -116,7 +114,7 @@ export class CategoryService {
       if (a.path < b.path) return 1;
       return 0;
     });
-    console.log(categoriesWithPath)
+    
     return categoriesWithPath;
     //const newCat = categories.map(category =>{
     //let parent;
