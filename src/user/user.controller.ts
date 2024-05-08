@@ -5,16 +5,16 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('auth')
+@ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
-  
+
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -39,8 +39,6 @@ export class UserController {
   //findByEmail(@Param('email') email: string) {
   @Post('email')
   findByEmail(@Body() getUserDto: GetUserDto) {
-    
-    console.log('email',getUserDto)
-    return this.userService.findByEmail(getUserDto);
+    return this.userService.findByEmail(getUserDto.email);
   }
 }

@@ -103,27 +103,42 @@ export class UserService {
     return resultado;
   }
 
-  //async findByEmail(email: string) {
-  async findByEmail(getUserDto: GetUserDto) {
-    let resultado, error;
-    const email = getUserDto.email;
-    await this.userRepository.findOne({
-      where:{
-        email
-      }
-    })
-      .then(userSalvo => {
-        const user = new ListUserDto(userSalvo.id, userSalvo.email)
-        resultado = {
-          data: user,
-          message: "Usuário encontrado!"
+  async findByEmail(email: string) {
+  //async findByEmail(getUserDto: GetUserDto) {
+    //let resultado, error;
+    //const email = getUserDto.email;
+    //const user = await this.userRepository.findOne({
+    //  where:{
+    //    email
+    //  }
+    //})
+    //  .then(userSalvo => {
+    //    const user = new ListUserDto(userSalvo.id, userSalvo.email)
+    //    resultado = {
+    //      data: user,
+    //      message: "Usuário encontrado!"
+    //    }
+    //  })
+    //  .catch(err => error = err);
+
+    //this.Error(error);
+    
+    //const email = getUserDto.email;
+    let user;
+    try{
+      user = await this.userRepository.findOne({
+        where:{
+          email: email,
         }
-      })
-      .catch(err => error = err);
+      });
+      
+    } catch (e){
+      this.Error(e);
+    }
 
-    this.Error(error);
 
-    return resultado.data;
+
+    return user;
   }
 
   Error(error: string) {
