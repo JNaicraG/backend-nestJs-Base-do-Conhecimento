@@ -9,6 +9,9 @@ import { IsUniqueConstraint } from './shared/validation/is-unique-constraint';
 import { CategoryModule } from './category/category.module';
 import { ArticleModule } from './article/article.module';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [UserModule,
@@ -20,14 +23,15 @@ import { APP_GUARD } from '@nestjs/core';
       inject:[PostgresConfigService]
     }),
     CategoryModule,
-    ArticleModule
+    ArticleModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, IsUniqueConstraint, 
-    //{
-    //  provide:APP_GUARD,
-    //  useClass:JwtAuthGuard
-    //}
+  providers: [AppService, IsUniqueConstraint, JwtService,
+    {
+      provide:APP_GUARD,
+      useClass:JwtAuthGuard,
+    }
   ],
 })
 export class AppModule {}
