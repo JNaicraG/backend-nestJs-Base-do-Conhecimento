@@ -107,7 +107,6 @@ export class UserService {
   async findByEmail(getUserDto: GetUserDto) {
     let resultado, error;
     const email = getUserDto.email;
-    console.log('email',email)
     await this.userRepository.findOne({
       where:{
         email
@@ -124,7 +123,7 @@ export class UserService {
 
     this.Error(error);
 
-    return resultado;
+    return resultado.data;
   }
 
   Error(error: string) {

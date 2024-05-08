@@ -8,22 +8,26 @@ import { ConfigModule } from '@nestjs/config';
 import { IsUniqueConstraint } from './shared/validation/is-unique-constraint';
 import { CategoryModule } from './category/category.module';
 import { ArticleModule } from './article/article.module';
-import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [UserModule,
     ConfigModule.forRoot({
-      isGlobal:true
+      isGlobal:true,
     }),
     TypeOrmModule.forRootAsync({
       useClass:PostgresConfigService,
       inject:[PostgresConfigService]
     }),
     CategoryModule,
-    ArticleModule,
-    AuthModule  
+    ArticleModule
   ],
   controllers: [AppController],
-  providers: [AppService, IsUniqueConstraint],
+  providers: [AppService, IsUniqueConstraint, 
+    //{
+    //  provide:APP_GUARD,
+    //  useClass:JwtAuthGuard
+    //}
+  ],
 })
 export class AppModule {}

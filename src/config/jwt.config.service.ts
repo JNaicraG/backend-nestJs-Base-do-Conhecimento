@@ -10,10 +10,11 @@ export class JwtConfigService implements JwtOptionsFactory{
     ){}
 
     createJwtOptions(): JwtModuleOptions {
+        console.log("AUTHSECRET " + this.configService.get<string>('AUTH_SECRET'))
         return {
             global:true,
             secret: this.configService.get<string>('AUTH_SECRET'),
-            signOptions:{expiresIn:'60s'}
+            signOptions:{expiresIn:'30d'}
             //https://stackoverflow.com/questions/72314255/jwt-not-expiring-in-nestjs-application-even-after-setting-expiresin-value
             //https://docs.nestjs.com/security/authentication#implementing-the-sign-in-endpoint
         }
