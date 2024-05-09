@@ -13,6 +13,8 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { AdminAuthGuard } from './auth/guards/admin-auth.guard';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseConfigService } from './config/mongoose.config.service';
 
 @Module({
   imports: [UserModule,
@@ -22,6 +24,10 @@ import { AdminAuthGuard } from './auth/guards/admin-auth.guard';
     TypeOrmModule.forRootAsync({
       useClass:PostgresConfigService,
       inject:[PostgresConfigService]
+    }),
+    MongooseModule.forRootAsync({
+      useClass:MongooseConfigService,
+      inject:[MongooseConfigService]
     }),
     CategoryModule,
     ArticleModule,
