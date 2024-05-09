@@ -11,16 +11,13 @@ export class AdminAuthGuard implements CanActivate {
     ){}
     
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        console.log('Oiee')
         //const isAdmin = this.reflector.get<boolean>('isAdmin', context.getHandler());
         const isAdmin = this.reflector.get(IsAdmin, context.getHandler()) === undefined ? true : this.reflector.get(IsAdmin, context.getHandler()); //Se undefined, então é pra ser Admin (No atual momento prefere-se o uso de IsAdmin(False) de maneira específica e os IsAdmin(true) como o padrão do sistema, devido a quantidade de um x o outro)
         //E NotADmin também pareceu não intuitivo, por algum motivo.
         
-        console.log('Admin?',isAdmin)
         if(isAdmin){
             const request = context.switchToHttp().getRequest();
             const user = request.user;
-            console.log('user', user.admin)
             return !!user?.admin;
         }
         
