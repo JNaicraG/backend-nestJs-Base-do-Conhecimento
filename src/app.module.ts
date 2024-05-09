@@ -16,6 +16,7 @@ import { AdminAuthGuard } from './api/auth/guards/admin-auth.guard';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MongooseConfigService } from './config/mongoose.config.service';
+import { StatModule } from './api/stat/stat.module';
 
 @Module({
   imports: [UserModule,
@@ -33,7 +34,8 @@ import { MongooseConfigService } from './config/mongoose.config.service';
     ScheduleModule.forRoot(),
     CategoryModule,
     ArticleModule,
-    AuthModule
+    AuthModule,
+    StatModule
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint, JwtService,
