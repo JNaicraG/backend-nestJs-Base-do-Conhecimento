@@ -17,6 +17,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MongooseConfigService } from './config/mongoose.config.service';
 import { StatModule } from './api/stat/stat.module';
+import { StatScheduleModule } from './schedule/stat-schedule/stat-schedule.module';
+import { StatScheduleService } from './schedule/stat-schedule/stat-schedule.service';
 
 @Module({
   imports: [UserModule,
@@ -35,10 +37,11 @@ import { StatModule } from './api/stat/stat.module';
     CategoryModule,
     ArticleModule,
     AuthModule,
-    StatModule
+    StatModule,
+    StatScheduleModule
   ],
   controllers: [AppController],
-  providers: [AppService, IsUniqueConstraint, JwtService,
+  providers: [AppService, IsUniqueConstraint, JwtService, StatScheduleService,
     {
       provide:APP_GUARD,
       useClass:JwtAuthGuard,

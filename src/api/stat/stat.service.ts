@@ -43,7 +43,7 @@ export class StatService {
 
         //Inserir no MongoDB
         if (changeArticles || changeCategories || changeUsers) {
-            stat.save().then(() => console.log('[Stats] Estatísticas atualizadas'))
+            return await stat.save().then(() => console.log('[Stats] Estatísticas atualizadas'))
         }
     }
 

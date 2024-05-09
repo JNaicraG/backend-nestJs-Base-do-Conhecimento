@@ -15,6 +15,7 @@ import { Stat, StatSchema } from './schemas/stat.schema';
     ArticleModule,
     CategoryModule],
   controllers: [StatController],
-  providers: [StatService, ],//...statsProvider], //utilizando o @nestjs/mongoose não é mais necessário o ...statsProvider
+  providers: [StatService],//,...statsProvider], //utilizando o @nestjs/mongoose não é mais necessário o ...statsProvider
+  exports:[StatService],
 })
 export class StatModule {}
