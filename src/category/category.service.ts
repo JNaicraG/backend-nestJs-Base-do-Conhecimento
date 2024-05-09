@@ -61,8 +61,19 @@ export class CategoryService {
   }
 
 
-  findOne(id: number) {
-    return this.categoryRepository.findOneBy({ id });
+  async findOne(id: number) {
+    return await this.categoryRepository.findOneBy({ id });
+  }
+
+  async findOneAndArticles(id:number){
+    return await this.categoryRepository.findOne({
+      where:{
+        id
+      },
+      relations:{
+        articles: true,
+      }
+    });
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {

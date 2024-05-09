@@ -4,6 +4,7 @@ import { SignInDto } from './dto/sign-in.dto';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TokenDto } from './dto/token.dto';
 import { IsPublic } from './decorators/is-public.decorator';
+import { IsAdmin } from './decorators/admin.decorator';
 
 ApiTags('auth')
 @Controller()
@@ -13,6 +14,7 @@ export class AuthController {
 
 
   @IsPublic()
+  @IsAdmin(false)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({
     type:TokenDto
