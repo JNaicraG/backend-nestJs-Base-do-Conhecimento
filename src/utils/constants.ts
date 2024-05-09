@@ -1,0 +1,2 @@
+export const STAT_MODEL = 'STAT_MODEL';
+export const DATABASE_CONNECTION = 'DATABASE_CONNECTION';
