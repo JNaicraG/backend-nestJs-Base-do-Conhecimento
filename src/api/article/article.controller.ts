@@ -3,7 +3,7 @@ import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { IsAdmin } from 'src/auth/decorators/admin.decorator';
+import { IsAdmin } from 'src/api/auth/decorators/admin.decorator';
 
 @ApiTags('articles')
 @Controller('articles')

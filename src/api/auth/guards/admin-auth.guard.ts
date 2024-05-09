@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { Observable } from "rxjs";
+import { Reflector } from "@nestjs/core"; 
 import { IsAdmin } from "../decorators/admin.decorator";
 
 
@@ -21,6 +20,7 @@ export class AdminAuthGuard implements CanActivate {
         if(isAdmin){
             const request = context.switchToHttp().getRequest();
             const user = request.user;
+            console.log('user', user.admin)
             return !!user?.admin;
         }
         

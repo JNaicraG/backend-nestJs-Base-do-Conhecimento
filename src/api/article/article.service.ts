@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from './entities/article.entity';
 import { Repository } from 'typeorm';
 import { ListArticleDto } from './dto/list-article.dto';
-import { Category } from 'src/category/entities/category.entity';
+//import { Category } from 'src/api/category/entities/category.entity';
 
 @Injectable()
 export class ArticleService {

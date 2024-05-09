@@ -1,6 +1,6 @@
-import { Category } from "src/category/entities/category.entity";
-import { AbstractEntity } from "src/shared/abstract/abstract.entity";
-import { User } from "src/user/entities/user.entity";
+import { Category } from "src/api/category/entities/category.entity";
+import { AbstractEntity } from "src/api/shared/abstract/abstract.entity";
+import { User } from "src/api/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'articles' })

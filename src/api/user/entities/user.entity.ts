@@ -1,5 +1,5 @@
-import { Article } from "src/article/entities/article.entity";
-import { AbstractEntity } from "src/shared/abstract/abstract.entity";
+import { Article } from "src/api/article/entities/article.entity";
+import { AbstractEntity } from "src/api/shared/abstract/abstract.entity";
 import { Column, Entity, OneToMany } from "typeorm";
 
 @Entity({ name: 'users' })      //Id extendido através de Abstract

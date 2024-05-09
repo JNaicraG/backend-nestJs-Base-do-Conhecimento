@@ -6,7 +6,7 @@ import { JwtModuleOptions, JwtOptionsFactory } from "@nestjs/jwt";
 export class JwtConfigService implements JwtOptionsFactory{
 
     constructor(
-        private configService:ConfigService
+        private readonly configService:ConfigService
     ){}
 
     createJwtOptions(): JwtModuleOptions {

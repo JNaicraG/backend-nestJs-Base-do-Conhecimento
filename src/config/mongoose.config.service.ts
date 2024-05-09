@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { MongooseModuleOptions, MongooseOptionsFactory } from "@nestjs/mongoose";
+import { MongooseOptionsFactory, MongooseModuleOptions } from "@nestjs/mongoose";
 
-Injectable()
+@Injectable()
 export class MongooseConfigService implements MongooseOptionsFactory {
     constructor(
         private readonly configService:ConfigService,
@@ -10,7 +10,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
 
     createMongooseOptions(): MongooseModuleOptions {
         return {
-            uri: this.configService.get<string>('MongoHost'), // URI de conexão com o MongoDB
+            uri: this.configService.get<string>('MONGOHOST'), // URI de conexão com o MongoDB
             //useNewUrlParser: true, // Habilita o uso do novo parser do MongoDB (obrigatório para versões recentes)
             //useUnifiedTopology: true, // Habilita a detecção de servidores e monitoramento de status do servidor
             //useFindAndModify: false, // Desativa o uso do método deprecated findAndModify do MongoDB

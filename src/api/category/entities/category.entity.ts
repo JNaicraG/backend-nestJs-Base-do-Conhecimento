@@ -1,5 +1,5 @@
-import { Article } from "src/article/entities/article.entity";
-import { AbstractEntity } from "src/shared/abstract/abstract.entity";
+import { Article } from "src/api/article/entities/article.entity";
+import { AbstractEntity } from "src/api/shared/abstract/abstract.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent } from "typeorm";
 
 @Entity({name:'categories'})

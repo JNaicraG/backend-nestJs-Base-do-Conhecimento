@@ -1,5 +1,5 @@
 import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from "class-validator";
-import { IsUnique } from "src/shared/validation/is-unique";
+import { IsUnique } from "src/api/shared/validation/is-unique";
 
 export class CreateUserDto {
     @IsNotEmpty()
